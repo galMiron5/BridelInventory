@@ -106,8 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
             Text(
-              '$_counter',
+              'גל הפליץ היוםע $_counter פעמים ',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            OutlinedButton(
+              onPressed: () => {setState(() => _counter = 0)},
+              child: const Text('יום חדש פלוץ חדש'),
             ),
           ],
         ),
