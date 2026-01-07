@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:bridel_inventory/navigation_helper.dart';
+import 'package:bridel_inventory/screens/inventory_screen.dart';
 import 'package:flutter/material.dart';
 
 const Color primaryColor = Color.fromARGB(255, 7, 200, 148);
@@ -67,21 +69,58 @@ class _HomeScreenState extends State<HomeScreen> {
           GridView.count(
             shrinkWrap: true,
             crossAxisCount: 3,
-            children: List.generate(
-              9,
-              (index) => Text(
-                widget.title,
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromARGB(
-                    250,
-                    rand.nextInt(250),
-                    rand.nextInt(250),
-                    rand.nextInt(250),
-                  ),
+            children: List.generate(9, (index) {
+              final randomColor = Color.fromARGB(
+                255,
+                rand.nextInt(256),
+                rand.nextInt(256),
+                rand.nextInt(256),
+              );
+
+              return TextButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.thumb_up, color: Colors.white),
+                          Text('You pressed button'),
+                          SizedBox(),
+                        ],
+                      ),
+                      showCloseIcon: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      behavior: SnackBarBehavior.floating,
+                      width: 300,
+                      elevation: 0,
+                      backgroundColor: randomColor,
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                },
+                child: Text(
+                  widget.title,
+                  style: TextStyle(fontSize: 30, color: randomColor),
                 ),
+              );
+            }),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.push(const InventoryScreen());
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              textStyle: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
+            child: const Text('Go to Inventory'),
           ),
         ],
       ),
